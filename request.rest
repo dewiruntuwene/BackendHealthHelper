@@ -1,0 +1,49 @@
+###
+POST    http://localhost:3000/createdataai/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJmYXJlbCIsImVtYWlsIjoiZmFyZWxAZ21haWwuY29tIiwiaWF0IjoxNzM0MzQ1NTU3LCJleHAiOjE3MzY5Mzc1NTd9.JkwbRGD6jpeTndeIqAq2l1tlQHUyLaavA-s14d0jWiA
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Buatkan plan makanan dan olahraga untuk saya. Berat badan 70 kg, tinggi badan 170 cm, dan usia 25 tahun."
+    }
+  ]
+}
+
+
+###
+DELETE  http://localhost:5000/logout
+
+{ "role": "user", "content": "kira-kira olahraga apa yang cocok untuk mengurangi kalori saya" }
+
+###
+POST   http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username": "farel",
+    "email": "farel@gmail.com",
+    "password": "12345"
+}
+
+###
+POST   http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "farel@gmail.com",
+    "password": "12345"
+}
+
+###
+GET   http://localhost:5000/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJkZXdpZiIsImVtYWlsIjoiZGV3aXIxMUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMzE1NjU5MCwiZXhwIjoxNzM1NzQ4NTkwfQ.spjuqP3-O2pi8tICGwTBbnqKVtbyYz9HgMzUpO69bME
+
+###
+GET https://platform.fatsecret.com/rest/food/v4?
+Content-Type: application/json
+Header: Authorization: Bearer 4c1d88903937469888e16f20d39dc1c6
+

@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Ganti dengan MySQL, SQLite, atau MongoDB jika perlu
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  user_id        Int      @id @default(autoincrement())
+  username      String
+  email     String   @unique
+  password  String    @db.VarChar(255)
+  data     Data[]   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  last_login    DateTime?   @default(now())
+  refresh_token String?     @db.VarChar(255)
+
+  Planner Planner[]
+}
+
+model Data {
+  data_id        Int      @id @default(autoincrement())
+  messages   String   // Pesan dalam format JSON (untuk menyimpan transkripsi)
+  output     String   // Output teks dari AI
+  audioInput String?  // URL file suara di penyimpanan eksternal
+  author    Users     @relation(fields: [authorId], references: [user_id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Planner {
+  id             Int      @id @default(autoincrement())
+  recommended_calories Int // Kalori yang disarankan
+  food_plan      String   // Rencana makanan
+  exercise_plan  String   // Rencana olahraga
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  userId         Int
+  user           Users     @relation(fields: [userId], references: [user_id])
+}
+
+
+
+
