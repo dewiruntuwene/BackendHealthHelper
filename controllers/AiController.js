@@ -252,10 +252,6 @@ const extractExercisePlan = (output) => {
 };
 
 
-
-
-
-
 // Helper functions to extract data using regex
 const extractWeight = (messages) => {
     const weightRegex = /berat badan\s*(\d+)\s*kg/i;
@@ -274,3 +270,16 @@ const extractAge = (messages) => {
     const match = messages.find((msg) => ageRegex.test(msg.content));
     return match ? parseInt(ageRegex.exec(match.content)[1]) : null;
 };
+
+export const getPlanner = async (req, res) => {
+    try {
+        const response = await prisma.planner.findMany({
+          where: {
+            userId: req.user.user_id,
+          },
+        });
+        res.status(200).json(response);
+      } catch (error) {
+        console.log(error.message);
+      }
+}

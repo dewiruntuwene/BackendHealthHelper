@@ -38,7 +38,7 @@ Content-Type: application/json
 }
 
 ###
-GET   http://localhost:5000/users
+GET   http://localhost:3000/users
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJkZXdpZiIsImVtYWlsIjoiZGV3aXIxMUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMzE1NjU5MCwiZXhwIjoxNzM1NzQ4NTkwfQ.spjuqP3-O2pi8tICGwTBbnqKVtbyYz9HgMzUpO69bME
 
@@ -46,4 +46,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiO
 GET https://platform.fatsecret.com/rest/food/v4?
 Content-Type: application/json
 Header: Authorization: Bearer 4c1d88903937469888e16f20d39dc1c6
+
+###
+GET   http://localhost:3000/getplanner
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJmYXJlbCIsImVtYWlsIjoiZmFyZWxAZ21haWwuY29tIiwiaWF0IjoxNzM0MzQ1NTU3LCJleHAiOjE3MzY5Mzc1NTd9.JkwbRGD6jpeTndeIqAq2l1tlQHUyLaavA-s14d0jWiA
 

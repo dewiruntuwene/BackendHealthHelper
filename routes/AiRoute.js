@@ -1,6 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit"; // Tambahkan ini
-import { createData } from "../controllers/AiController.js";
+import { createData, getPlanner } from "../controllers/AiController.js";
 import { PrismaClient } from "@prisma/client";
 import { verifyToken } from "../middleware/VerifyToken.js";
 
@@ -18,5 +18,6 @@ const createDataLimiter = rateLimit({
 
 // Terapkan Rate Limiter pada rute
 router.post("/createdataai", verifyToken, createData);
+router.get("/getplanner", verifyToken, getPlanner);
 
 export default router;
