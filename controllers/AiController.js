@@ -240,23 +240,22 @@ const extractExercisePlan = (output) => {
 
 // Helper functions to extract data using regex
 const extractWeight = (messages) => {
-    const weightRegex = /berat badan\s*:?[\s]*([\d.]+)\s*(kg|cm)?/i;
+    const weightRegex = /berat badan\s*(\d+)\s*kg/i;
     const match = messages.find((msg) => weightRegex.test(msg.content));
     return match ? parseFloat(weightRegex.exec(match.content)[1]) : null;
 };
 
 const extractHeight = (messages) => {
-    const heightRegex = /tinggi badan\s*:?[\s]*([\d.]+)\s*(cm)?/i;
+    const heightRegex = /tinggi badan\s*(\d+)\s*cm/i;
     const match = messages.find((msg) => heightRegex.test(msg.content));
     return match ? parseFloat(heightRegex.exec(match.content)[1]) : null;
 };
 
 const extractAge = (messages) => {
-    const ageRegex = /usia\s*:?[\s]*([\d.]+)\s*(tahun)?/i;
+    const ageRegex = /usia\s*(\d+)\s*tahun/i;
     const match = messages.find((msg) => ageRegex.test(msg.content));
     return match ? parseInt(ageRegex.exec(match.content)[1]) : null;
 };
-
 
 export const getPlanner = async (req, res) => {
     try {
