@@ -225,51 +225,38 @@ const extractCalories = (output) => {
 };
 
 
-// Extract the food plan (breakfast, lunch, dinner, and snacks) from the formatted response
+// Fungsi helper untuk mengekstrak food plan
 const extractFoodPlan = (output) => {
-    const foodPlanRegex = /### Food Plan([\s\S]*?)### Exercise Plan/i;
-    const match = output.match(foodPlanRegex);
-    if (match) {
-        const foodPlanContent = match[1].trim();
-        
-        // You can further parse and clean up food plan sections if necessary
-        return foodPlanContent;
-    }
-    return null;
+    const match = output.match(/### Food Plan\n([\s\S]*?)### Exercise Plan/);
+    return match ? match[1].trim() : null;
 };
 
-// Extract the exercise plan (for each day of the week) from the formatted response
+// Fungsi helper untuk mengekstrak exercise plan
 const extractExercisePlan = (output) => {
-    const exercisePlanRegex = /### Exercise Plan([\s\S]*)/i;
-    const match = output.match(exercisePlanRegex);
-    if (match) {
-        const exercisePlanContent = match[1].trim();
-        
-        // You can further parse and clean up exercise plan sections if necessary
-        return exercisePlanContent;
-    }
-    return null;
+    const match = output.match(/### Exercise Plan\n([\s\S]*)/);
+    return match ? match[1].trim() : null;
 };
 
 
 // Helper functions to extract data using regex
 const extractWeight = (messages) => {
-    const weightRegex = /berat badan\s*(\d+)\s*kg/i;
+    const weightRegex = /berat badan\s*:?[\s]*([\d.]+)\s*(kg|cm)?/i;
     const match = messages.find((msg) => weightRegex.test(msg.content));
     return match ? parseFloat(weightRegex.exec(match.content)[1]) : null;
 };
 
 const extractHeight = (messages) => {
-    const heightRegex = /tinggi badan\s*(\d+)\s*cm/i;
+    const heightRegex = /tinggi badan\s*:?[\s]*([\d.]+)\s*(cm)?/i;
     const match = messages.find((msg) => heightRegex.test(msg.content));
     return match ? parseFloat(heightRegex.exec(match.content)[1]) : null;
 };
 
 const extractAge = (messages) => {
-    const ageRegex = /usia\s*(\d+)\s*tahun/i;
+    const ageRegex = /usia\s*:?[\s]*([\d.]+)\s*(tahun)?/i;
     const match = messages.find((msg) => ageRegex.test(msg.content));
     return match ? parseInt(ageRegex.exec(match.content)[1]) : null;
 };
+
 
 export const getPlanner = async (req, res) => {
     try {
@@ -283,3 +270,41 @@ export const getPlanner = async (req, res) => {
         console.log(error.message);
       }
 }
+
+const parseFoodPlan = (output) => {
+    const foodPlan = {};
+    const sections = output.match(/### (Sarapan|Makan Siang|Makan Malam|Snacks)\n([\s\S]*?)(?=\n###|$)/g);
+
+    if (sections) {
+        sections.forEach((section) => {
+            const [title, items] = section.split("\n");
+            const key = title.replace("### ", "").trim();
+            foodPlan[key] = items
+                .split("\n")
+                .filter((line) => line.trim() !== "")
+                .map((item) => item.replace(/^- /, "").trim());
+        });
+    }
+
+    return foodPlan;
+};
+
+const parseExercisePlan = (output) => {
+    const exercisePlan = {};
+    const days = output.match(/### (Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu)\n([\s\S]*?)(?=\n###|$)/g);
+
+    if (days) {
+        days.forEach((day) => {
+            const [title, items] = day.split("\n");
+            const key = title.replace("### ", "").trim();
+            exercisePlan[key] = items
+                .split("\n")
+                .filter((line) => line.trim() !== "")
+                .map((exercise) => exercise.replace(/^- /, "").trim());
+        });
+    }
+
+    return exercisePlan;
+};
+
+
